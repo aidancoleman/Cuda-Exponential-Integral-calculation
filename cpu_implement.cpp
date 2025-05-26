@@ -1,4 +1,4 @@
-// File: cpu_impl.cpp
+// File: cpu_implement.cpp
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -14,6 +14,7 @@ extern unsigned int n, numberOfSamples;
 extern double a, b;
 extern bool gpu;   //  gpu flag
 extern void printUsage();
+extern int parseArguments(int argc, char **argv);
 
 float exponentialIntegralFloat(const int n, const float x) {
     static const float eulerConstant = 0.5772156649015329f;
@@ -126,44 +127,46 @@ void outputResultsCpu(const std::vector<std::vector<float>> &resultsFloatCpu,
         }
     }
 }
-
-int parseArguments(int argc, char *argv[]) {
-    int c;
-    while ((c = getopt(argc, argv, "cghn:m:a:b:tv")) != -1) {
-        switch (c) {
-            case 'c': cpu = false; break;
-            case 'g': gpu = false; break;
-            case 'h': printUsage(); exit(0); break;
-            case 'i': maxIterations = atoi(optarg); break;
-            case 'n': n = atoi(optarg); break;
-            case 'm': numberOfSamples = atoi(optarg); break;
-            case 'a': a = atof(optarg); break;
-            case 'b': b = atof(optarg); break;
-            case 't': timing = true; break;
-            case 'v': verbose = true; break;
-            default:
-                fprintf(stderr, "Invalid option given\n");
-                printUsage();
-                return -1;
-        }
-    }
-    return 0;
-}
-
-void printUsage() {
-    printf("exponentialIntegral program\n");
-    printf("by: Jose Mauricio Refojo <refojoj@tcd.ie>\n");
-    printf("This program will calculate a number of exponential integrals\n");
-    printf("usage:\n");
-    printf("exponentialIntegral.out [options]\n");
-    printf("  -a value : set the a value of the interval (default: 0.0)\n");
-    printf("  -b value : set the b value of the interval (default: 10.0)\n");
-    printf("  -c       : skip the CPU test\n");
-    printf("  -g       : skip the GPU test\n");
-    printf("  -h       : show usage\n");
-    printf("  -i size  : set max iterations (default: 2000000000)\n");
-    printf("  -n size  : set the max order of E_n (default: 10)\n");
-    printf("  -m size  : set the number of samples (default: 10)\n");
-    printf("  -t       : show timing\n");
-    printf("  -v       : verbose output\n");
-}
+/*
+ int parseArguments(int argc, char *argv[]) {
+ int c;
+ while ((c = getopt(argc, argv, "cghn:m:a:b:tv")) != -1) {
+ switch (c) {
+ case 'c': cpu = false; break;
+ case 'g': gpu = false; break;
+ case 'h': printUsage(); exit(0); break;
+ case 'i': maxIterations = atoi(optarg); break;
+ case 'n': n = atoi(optarg); break;
+ case 'm': numberOfSamples = atoi(optarg); break;
+ case 'a': a = atof(optarg); break;
+ case 'b': b = atof(optarg); break;
+ case 't': timing = true; break;
+ case 'v': verbose = true; break;
+ default:
+ fprintf(stderr, "Invalid option given\n");
+ printUsage();
+ return -1;
+ }
+ }
+ return 0;
+ }
+ 
+ 
+ void printUsage() {
+ printf("exponentialIntegral program\n");
+ printf("by: Jose Mauricio Refojo <refojoj@tcd.ie>\n");
+ printf("This program will calculate a number of exponential integrals\n");
+ printf("usage:\n");
+ printf("exponentialIntegral.out [options]\n");
+ printf("  -a value : set the a value of the interval (default: 0.0)\n");
+ printf("  -b value : set the b value of the interval (default: 10.0)\n");
+ printf("  -c       : skip the CPU test\n");
+ printf("  -g       : skip the GPU test\n");
+ printf("  -h       : show usage\n");
+ printf("  -i size  : set max iterations (default: 2000000000)\n");
+ printf("  -n size  : set the max order of E_n (default: 10)\n");
+ printf("  -m size  : set the number of samples (default: 10)\n");
+ printf("  -t       : show timing\n");
+ printf("  -v       : verbose output\n");
+ }
+ */
